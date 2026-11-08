@@ -522,7 +522,7 @@ function initHistoryChecker(){
  else if(t==='plate'){hint.textContent='Kontrolli me targë ofrohet vetëm në disa tregje europiane. VIN-i është alternativa më e sigurt.';field.placeholder='Vendos targën';}
  else{hint.textContent='VIN-i standard ka 17 karaktere. Mos vendos hapësira.';field.placeholder='Vendos VIN-in 17 karakteresh';}}
  country.addEventListener('change',update);type.addEventListener('change',update);update();
- $('historySearch').addEventListener('click',()=>{
+ $('historySearch').addEventListener('click',async()=>{
  const c=country.value,t=type.value,v=field.value.trim().toUpperCase().replace(/\s+/g,'');
  if(!v){$('historyResult').textContent='Vendos VIN-in ose targën';$('historyDetail').textContent='Plotëso identifikuesin përpara se të vazhdosh.';return;}
  if(t==='vin'&&!/^[A-HJ-NPR-Z0-9]{17}$/.test(v)){$('historyResult').textContent='VIN i pavlefshëm';$('historyDetail').textContent='VIN-i standard duhet të ketë 17 karaktere dhe nuk përmban shkronjat I, O ose Q.';return;}
