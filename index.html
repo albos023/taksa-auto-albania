@@ -299,6 +299,132 @@ for(const [make,models] of Object.entries(extraEngines)){
   for(const spec of engines) if(!vehicleCatalog[make][model].some(x=>x[0]===spec[0])) vehicleCatalog[make][model].push(spec);
  }
 }
+
+// Zgjerim i katalogut global: modele te tjera dhe variante perfaqesuese motorresh.
+// Fuqia dhe masa jane orientuese; ndryshojne sipas vitit, tregut, transmisionit dhe pajisjeve.
+const globalCatalogExpansion = {
+ 'Acura':['Integra','TL','TSX','TLX','RLX','RDX','MDX','NSX'],
+ 'Aston Martin':['DB7','DB9','DB11','DBS','Vantage','Rapide','Vanquish','DBX'],
+ 'Bentley':['Continental GT','Flying Spur','Bentayga','Mulsanne','Arnage'],
+ 'BYD':['Dolphin','Atto 3','Seal','Han','Tang','Song Plus','Yuan Plus','Seagull'],
+ 'Cadillac':['ATS','CTS','CT5','CT6','XT4','XT5','XT6','Escalade'],
+ 'Chery':['Tiggo 4','Tiggo 7','Tiggo 8','Arrizo 5','Arrizo 8','Omoda 5','Jaecoo 7'],
+ 'Chrysler':['300C','200','Pacifica','Voyager','PT Cruiser','Sebring'],
+ 'Cupra':['Ateca','Formentor','Leon','Born','Tavascan'],
+ 'Daihatsu':['Terios','Sirion','Cuore','Materia','Copen','Rocky'],
+ 'Dodge':['Challenger','Charger','Durango','Journey','Caliber','Nitro','RAM 1500'],
+ 'Ferrari':['California','458 Italia','488 GTB','F8 Tributo','Roma','Portofino','812 Superfast','SF90'],
+ 'Genesis':['G70','G80','G90','GV60','GV70','GV80'],
+ 'GMC':['Terrain','Acadia','Yukon','Sierra','Canyon'],
+ 'Great Wall':['Steed','Wingle 5','Haval H6','Haval H9','Poer'],
+ 'Haval':['H2','H6','H6 HEV','H6 PHEV','H9','Jolion','Dargo'],
+ 'Infiniti':['G35','G37','Q50','Q60','QX50','QX60','QX70','QX80'],
+ 'Isuzu':['D-Max','MU-X','Trooper','Rodeo'],
+ 'Jaguar':['X-Type','XE','XF','XJ','F-Type','E-Pace','F-Pace','I-Pace'],
+ 'Lada':['Niva','Granta','Vesta','Kalina','Priora','Largus'],
+ 'Lamborghini':['Gallardo','Huracan','Aventador','Urus','Revuelto'],
+ 'Lancia':['Ypsilon','Delta','Thesis','Musa','Thema'],
+ 'Lincoln':['MKZ','MKX','Nautilus','Navigator','Continental','Aviator'],
+ 'Lotus':['Elise','Exige','Evora','Emira','Eletre'],
+ 'Maserati':['Ghibli','Quattroporte','Levante','Grecale','GranTurismo','MC20'],
+ 'McLaren':['MP4-12C','570S','600LT','720S','Artura','GT'],
+ 'MG':['MG3','MG4','MG5','ZS','HS','Marvel R','Cyberster'],
+ 'Polestar':['Polestar 2','Polestar 3','Polestar 4'],
+ 'Proton':['Saga','Persona','Iriz','X50','X70','Exora'],
+ 'Ram':['1500','2500','3500','ProMaster'],
+ 'Rolls-Royce':['Ghost','Phantom','Wraith','Dawn','Cullinan','Spectre'],
+ 'Saab':['9-3','9-5','900','9000'],
+ 'Smart':['Fortwo','Forfour','#1','#3'],
+ 'SsangYong':['Korando','Tivoli','Rexton','Musso','XLV','Torres'],
+ 'KGM':['Korando','Tivoli','Rexton','Musso','Torres'],
+ 'Tata':['Nexon','Harrier','Safari','Punch','Altroz'],
+ 'VinFast':['VF  e34','VF 5','VF 6','VF 7','VF 8','VF 9'],
+ 'XPeng':['G3','G6','G9','P5','P7'],
+ 'Zeekr':['001','X','7X','009'],
+ 'Lucid':['Air','Gravity'],
+ 'Rivian':['R1T','R1S'],
+ 'Fisker':['Ocean'],
+ 'Opel':['Mokka','Crossland','Grandland','Zafira','Meriva','Vectra','Corsa','Insignia','Frontera'],
+ 'Toyota':['Aygo','Auris','Avensis','C-HR','Camry','Hilux','Highlander','Land Cruiser Prado','Land Cruiser 200','Land Cruiser 300','RAV4','Yaris Cross','Corolla Cross','bZ4X','Prius','Proace'],
+ 'Volkswagen':['Polo','Jetta','Arteon','T-Roc','T-Cross','Touareg','Touran','Sharan','Caddy','Amarok','ID.3','ID.4','ID.5','ID.7'],
+ 'Audi':['A1','A5','A7','A8','Q2','Q3','Q5','Q7','Q8','TT','Q4 e-tron','Q8 e-tron','e-tron GT'],
+ 'BMW':['Seria 2','Seria 4','Seria 6','Seria 7','X1','X2','X3','X4','X5','X6','X7','XM','i3','i4','iX','iX3'],
+ 'Mercedes-Benz':['Klasa B','Klasa S','CLA','CLS','GLA','GLB','GLC','GLE','GLS','G-Class','EQA','EQB','EQC','EQS','EQE','Vito','Sprinter'],
+ 'Skoda':['Fabia','Rapid','Scala','Kamiq','Karoq','Kodiaq','Kushaq','Enyaq','Roomster'],
+ 'Ford':['Fiesta','Kuga','Edge','Explorer','Mustang','Galaxy','S-Max','Transit','Tourneo Connect','Tourneo Custom','F-150','Bronco'],
+ 'Hyundai':['Accent','Elantra','Sonata','i10','i20','i30','Bayon','Venue','Tucson','Santa Cruz','Palisade','Ioniq 5','Ioniq 6','Kona Electric'],
+ 'Kia':['Picanto','Cerato','Forte','K5','Stinger','Stonic','XCeed','Niro','EV3','EV6','EV9','Carnival','Telluride'],
+ 'Nissan':['Almera','Note','Pulsar','Sentra','Altima','Maxima','Murano','Pathfinder','Patrol','Navara','Leaf','Ariya'],
+ 'Renault':['Twingo','Symbol','Fluence','Talisman','Arkana','Austral','Espace','Koleos','Zoe','Megane E-Tech','Kangoo','Trafic'],
+ 'Peugeot':['107','108','2008','207','206','407','408','4007','4008','Rifter','Partner','e-208','e-2008'],
+ 'Citroen':['C1','C2','C-Elysee','C4 Cactus','C4 Aircross','C5 Aircross','C6','Berlingo','Jumpy','e-C4'],
+ 'Dacia':['Spring','Jogger','Lodgy','Dokker','Bigster'],
+ 'Honda':['City','Jazz','Insight','Accord','HR-V','ZR-V','CR-V','Pilot','e:Ny1'],
+ 'Mazda':['MX-5','CX-30','CX-60','CX- tesla','CX-9','RX-8','MX-30'],
+ 'Volvo':['S80','S90','V40','V70','V90','XC40','XC70','C30','C40','EX30','EX90'],
+ 'SEAT':['Mii','Altea','Exeo','Tarraco'],
+ 'Fiat':['Panda','Bravo','Croma','Freemont','Doblo','Ducato','500X','500e'],
+ 'Suzuki':['Alto','Baleno','Ignis','Jimny','S-Cross','Across','Swace'],
+ 'Mitsubishi':['Colt','Carisma','Galant','Pajero','Pajero Sport','L200','Eclipse Cross','ASX','Eclipse Cross PHEV'],
+ 'Jeep':['Wrangler','Gladiator','Commander','Wagoneer','Avenger'],
+ 'Land Rover':['Defender','Discovery Sport','Discovery 5','Range Rover','Range Rover Velar','Range Rover Sport','Range Rover Evoque'],
+ 'Subaru':['Impreza','Legacy','Levorg','Tribeca','BRZ','Solterra'],
+ 'Lexus':['CT','ES','GS','LS','UX','LBX','LC','LFA','RZ'],
+ 'Mini':['Clubman','Paceman','Coupe','Roadster','Aceman'],
+ 'Alfa Romeo':['MiTo','Tonale','Stelvio','Brera','Spider','166'],
+ 'Chevrolet':['Spark','Matiz','Malibu','Orlando','Trax','Equinox','Tahoe','Suburban','Camaro','Corvette','Volt','Bolt'],
+ 'Porsche':['911','Boxster','Cayman','Panamera','Taycan','718','Macan','Cayenne'],
+ 'Tesla':['Roadster','Cybertruck'],
+ 'DS Automobiles':['DS 4','DS 5','DS 9']
+};
+const commonEngineSets = [
+ ['1.0 Benzine 70-100 hp',55,1100,'normal'],
+ ['1.2 Benzine 75-110 hp',66,1200,'normal'],
+ ['1.4 Benzine 90-125 hp',85,1300,'normal'],
+ ['1.6 Benzine 110-160 hp',103,1400,'normal'],
+ ['2.0 Benzine 140-200 hp',147,1550,'normal'],
+ ['1.5 Diesel 90-120 hp',81,1400,'normal'],
+ ['1.6 Diesel 100-130 hp',96,1450,'normal'],
+ ['2.0 Diesel 140-190 hp',110,1600,'normal'],
+ ['2.2 Diesel 150-200 hp',147,1750,'normal'],
+ ['1.8 Hybrid 120-140 hp',90,1500,'hybrid'],
+ ['2.0 Hybrid 180-220 hp',140,1750,'hybrid'],
+ ['Plug-in Hybrid 200-300 hp',165,1900,'hybrid'],
+ ['Elektrik 100-200 kW',150,1750,'normal']
+];
+for (const [make, models] of Object.entries(globalCatalogExpansion)) {
+ vehicleCatalog[make] = vehicleCatalog[make] || {};
+ for (const modelName of models) {
+  if (vehicleCatalog[make][modelName]) continue;
+  const name = modelName.toLowerCase();
+  let specs = commonEngineSets;
+  if (/electric|e-tron|eq[a-z]|ioniq|leaf|ariya|zoe|b[zx]|id\.|taycan|tesla|polestar|lucid|rivian|spectre|born|dolphin|atto|seal|han|tang|vf |xpeng|zeekr|bolt|e-208|e-2008|spring|solterra|eletre|ev[369]/i.test(name)) {
+   specs = [['Elektrik 100 kW',100,1650,'normal'],['Elektrik 150 kW',150,1850,'normal'],['Elektrik AWD 220 kW',220,2050,'normal']];
+  } else if (/land cruiser|prado|patrol|pajero|defender|discovery|range rover|escalade|yukon|suburban|tahoe|durango|navigator|cullinan|phantom|bentayga|urus|cayenne|q7|q8|x5|x6|x7|gle|gls|g-class|sorento|telluride|palisade|highlander|pathfinder|explorer|bronco|wrangler|gladiator|ranger|hilux|amarok|f-150|ram 1500|d-max|mu-x|rexton|torres|h9|tang|safari/i.test(name)) {
+   specs = [['2.0 Diesel 150-190 hp',140,1900,'normal'],['2.2 Diesel 160-200 hp',147,2050,'normal'],['3.0 Diesel 190-250 hp',180,2200,'normal'],['2.0 Benzine Turbo 180-250 hp',165,1950,'normal'],['3.0 Benzine 250-350 hp',220,2200,'normal'],['2.0 Hybrid 200-250 hp',150,2100,'hybrid']];
+  }
+  vehicleCatalog[make][modelName] = specs.map(x=>x.slice());
+ }
+}
+// Shtojme edhe disa variante te zakonshme per modelet qe ekzistojne tashme.
+const extraCommonVariants = {
+ 'Toyota':{'Land Cruiser':[['4.0 V6 Benzine 249 hp',183,2250,'normal'],['4.5 V8 D-4D 286 hp',210,2600,'normal'],['2.8 D-4D 204 hp',150,2250,'normal']],'Land Cruiser Prado':[['2.7 Benzine 163 hp',120,1900,'normal'],['4.0 V6 Benzine 249 hp',183,2050,'normal'],['3.0 D-4D 173 hp',127,2150,'normal'],['2.8 D-4D 204 hp',150,2200,'normal']]},
+ 'Volkswagen':{'Tiguan':[['1.4 TSI 150 hp',110,1550,'normal'],['1.5 TSI 150 hp',110,1580,'normal'],['2.0 TDI 190 hp',140,1700,'normal'],['2.0 TSI 190 hp',140,1650,'normal']],'Polo':[['1.0 MPI 75 hp',55,1050,'normal'],['1.0 TSI 95 hp',70,1100,'normal'],['1.4 TDI 90 hp',66,1150,'normal']]},
+ 'BMW':{'X3':[['2.0d 150 hp',110,1750,'normal'],['2.0d 190 hp',140,1800,'normal'],['3.0d 258 hp',190,1900,'normal'],['2.0i 184 hp',135,1700,'normal']],'X5':[['3.0d 235 hp',173,2150,'normal'],['3.0d 258 hp',190,2200,'normal'],['4.4i V8 450 hp',330,2350,'normal']]},
+ 'Mercedes-Benz':{'GLC':[['200d 163 hp',120,1800,'normal'],['220d 194 hp',143,1850,'normal'],['300d 245 hp',180,1900,'normal'],['300e Plug-in 320 hp',235,2100,'hybrid']],'GLE':[['250d 204 hp',150,2100,'normal'],['350d 258 hp',190,2200,'normal'],['450 367 hp',270,2250,'hybrid']]},
+ 'Skoda':{'Kodiaq':[['1.5 TSI 150 hp',110,1650,'normal'],['2.0 TDI 150 hp',110,1750,'normal'],['2.0 TDI 200 hp',147,1850,'normal']],'Karoq':[['1.0 TSI 115 hp',85,1400,'normal'],['1.5 TSI 150 hp',110,1450,'normal'],['2.0 TDI 150 hp',110,1550,'normal']]},
+ 'Ford':{'Kuga':[['1.5 EcoBoost 150 hp',110,1600,'normal'],['2.0 TDCi 150 hp',110,1700,'normal'],['2.5 Hybrid 190 hp',140,1750,'hybrid']],'Ranger':[['2.0 EcoBlue 170 hp',125,2150,'normal'],['3.0 V6 Diesel 240 hp',177,2300,'normal']]},
+ 'Hyundai':{'Tucson':[['1.6 CRDi 136 hp',100,1600,'normal'],['1.6 T-GDI Hybrid 230 hp',169,1700,'hybrid'],['1.6 T-GDI Plug-in 265 hp',195,1850,'hybrid']],'Santa Fe':[['2.2 CRDi 202 hp',148,2050,'normal'],['1.6 T-GDI Hybrid 230 hp',169,2050,'hybrid'],['1.6 T-GDI Plug-in 265 hp',195,2150,'hybrid']]},
+ 'Kia':{'Sportage':[['1.6 CRDi 136 hp',100,1550,'normal'],['1.6 T-GDI Hybrid 230 hp',169,1650,'hybrid'],['1.6 T-GDI Plug-in 265 hp',195,1800,'hybrid']],'Sorento':[['2.2 CRDi 202 hp',148,2050,'normal'],['1.6 T-GDI Hybrid 230 hp',169,2050,'hybrid'],['1.6 T-GDI Plug-in 265 hp',195,2150,'hybrid']]}
+};
+for (const [make, models] of Object.entries(extraCommonVariants)) {
+ vehicleCatalog[make] = vehicleCatalog[make] || {};
+ for (const [modelName, specs] of Object.entries(models)) {
+  vehicleCatalog[make][modelName] = vehicleCatalog[make][modelName] || [];
+  for (const spec of specs) if (!vehicleCatalog[make][modelName].some(x=>x[0]===spec[0])) vehicleCatalog[make][modelName].push(spec);
+ }
+}
+
 function fillSelect(el,items,placeholder){el.innerHTML='<option value="">'+placeholder+'</option>'+items.map(v=>'<option value="'+String(v).replace(/"/g,'&quot;')+'">'+v+'</option>').join('');}
 function initVehiclePicker(){
 const brand=$('carBrand'),model=$('carModel'),engine=$('carEngine');
