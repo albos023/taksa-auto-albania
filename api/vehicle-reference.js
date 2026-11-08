@@ -5,11 +5,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const apiKey = process.env.APISH_API_KEY;
+  const market = String(req.query.market || "germany").toLowerCase();
+  const isKorea = market === "korea";
+  const apiKey = isKorea ? process.env.ENCAR_API_KEY : process.env.APISH_API_KEY;
   if (!apiKey) {
-    return res.status(503).json({
-      error: "Lidhja automatike nuk eshte aktivizuar ende. Duhet shtuar APISH_API_KEY ne Vercel."
-    });
+    return res.status(503).json({ error: isKorea ? "Lidhja me tregun e Korese se Jugut nuk eshte aktivizuar ende." : "Lidhja me mobile.de nuk eshte aktivizuar ende." });
   }
 
   const make = String(req.query.make || "").trim().slice(0, 60);
@@ -24,6 +24,48 @@ export default async function handler(req, res) {
       !["DIESEL", "PETROL", "HYBRID", "ELECTRICITY", "LPG"].includes(fuel) ||
       !Number.isFinite(mileage) || mileage < 0 || mileage > 1000000) {
     return res.status(400).json({ error: "Te dhenat e automjetit nuk jane te vlefshme." });
+  }
+
+  if (isKorea) {
+    const params = new URLSearchParams({
+      q: make + " " + model,
+      yearFrom: String(Math.max(1980, year - 1)),
+      yearTo: String(Math.min(new Date().getFullYear(), year + 1)),
+      fuel: ({ DIESEL: "diesel", PETROL: "gasoline", HYBRID: "hybrid", ELECTRICITY: "electric", LPG: "lpg" })[fuel],
+      count: "100",
+      sort: "priceAsc"
+    });
+    if (mileage > 0) {
+      params.set("mileageFrom", String(Math.max(0, mileage - 60000)));
+      params.set("mileageTo", String(mileage + 60000));
+    }
+    try {
+      const upstream = await fetch("https://api.encar-api.com/api/cars?" + params.toString(), {
+        headers: { "x-api-key": apiKey, "Accept": "application/json" }
+      });
+      const payload = await upstream.json().catch(() => ({}));
+      if (!upstream.ok) return res.status(upstream.status === 404 ? 404 : 502).json({
+        error: upstream.status === 429 ? "U arrit kufiri ditor i kerkimeve ne Encar API." : "Burimi Encar nuk ktheu rezultat. Kontrollo te dhenat ose provo perseri."
+      });
+      const rows = Array.isArray(payload.results) ? payload.results : [];
+      const parsed = rows.map((x) => {
+        const raw = x.Price ?? x.price ?? x.price_eur ?? x.priceEur;
+        const rawNum = Number(String(raw ?? "").replace(/[^0-9.]/g, ""));
+        const price = x.price_eur != null ? Number(x.price_eur) : x.priceEur != null ? Number(x.priceEur) : rawNum * 6.7;
+        const rawYear = x.FormYear ?? x.formYear ?? x.Year ?? x.year;
+        const yearMatch = String(rawYear ?? "").match(/(19|20)\\d{2}/);
+        const listingYear = yearMatch ? Number(yearMatch[0]) : null;
+        const listingMileage = Number(x.Mileage ?? x.mileage ?? 0);
+        const title = String(x.en?.manufacturer || x.Manufacturer || make) + " " + String(x.en?.model || x.Model || model) + " " + String(x.en?.badge || x.Badge || "");
+        return { title: title.trim(), price_eur: price, year: listingYear, mileage: listingMileage, url: x.url || x.detailUrl || "" };
+      }).filter(x => Number.isFinite(x.price_eur) && x.price_eur > 500 && (!x.year || Math.abs(x.year-year)<=1) && (!mileage || !x.mileage || Math.abs(x.mileage-mileage)<=70000));
+      if (!parsed.length) return res.status(404).json({ error: "Nuk u gjeten njoftime te krahasueshme ne Encar per kete marke/model/vit." });
+      const prices=parsed.map(x=>x.price_eur).sort((a,b)=>a-b);
+      const median=prices.length%2?prices[(prices.length-1)/2]:(prices[prices.length/2-1]+prices[prices.length/2])/2;
+      return res.status(200).json({source:"Encar API",market:"South Korea",currency:"EUR",sample_count:prices.length,median_eur:Math.round(median),min_eur:Math.round(prices[0]),max_eur:Math.round(prices[prices.length-1]),listings:parsed.slice(0,5)});
+    } catch (error) {
+      return res.status(502).json({ error: "Gabim gjate lidhjes me tregun e Korese se Jugut." });
+    }
   }
 
   const params = new URLSearchParams({
