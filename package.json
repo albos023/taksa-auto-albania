@@ -1,0 +1,19 @@
+{
+  "name": "taksa-auto-albania",
+  "version": "1.0.0",
+  "description": "Albanian Vehicle Tax Calculator",
+  "main": "index.html",
+  "scripts": {
+    "dev": "echo 'Open index.html in browser'"
+  },
+  "keywords": [
+    "albania",
+    "tax",
+    "calculator"
+  ],
+  "author": "almi",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^1.3.1"
+  }
+}
