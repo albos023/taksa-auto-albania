@@ -470,9 +470,9 @@ function euroEstimate(year){
 function euroCheck(){
  const b=$('euroBrand').value,m=$('euroModel').value,y=Number($('euroYear').value),now=new Date().getFullYear();
  if(!b||!m||!Number.isInteger(y)||y<1980||y>now){$('euroClass').textContent='—';$('euroResult').textContent='Ploteso marken, modelin dhe vitin';$('euroResult').style.color='#f5f8ff';$('euroDetail').textContent='Zgjidh marken dhe modelin, pastaj vendos nje vit prodhimi te vlefshem.';return;}
- const e=euroEstimate(y),risk=e.level===3||e.level===4,ambiguous=e.level===0;
+ const e=euroEstimate(y),risk=e.level===3||e.level===4||e.label.includes('Euro 3')||e.label.includes('Euro 4'),ambiguous=e.level===0;
  $('euroClass').textContent=e.label;
- $('euroResult').style.color=risk?'#ffb36b':ambiguous?'#ffd477':'#42d9ed';
+ $('euroResult').style.color=risk?'#ff4d5a':'#35d07f';
  $('euroResult').textContent=risk?'MUND TE PREKET NGA PLANI':ambiguous?'DUHET VERIFIKUAR STANDARDI':'NUK IDENTIFIKOHET SI EURO 3/4';
  let outcome=risk?'Sipas vleresimit te vitit, makina mund te jete Euro '+e.level+'. Euro 3 dhe Euro 4 permenden si kategori qe mund te preken nga masat e ardhshme. Kjo nuk do te thote se makina jote eshte ndaluar ose do te dale patjeter nga qarkullimi.':ambiguous?'Viti i prodhimit bie ne nje periudhe kalimtare. Mund te jete nje nga dy standardet e shfaqura. Nese rezulton Euro 3/4, mund te preket; nese Euro 5/6, nuk perfshihet ne kategorite e vjetra te permendura deri tani.':'Per kete periudhe pritet zakonisht Euro '+e.level+'. Euro 5 dhe Euro 6 nuk jane kategorite e vjetra te permendura ne njoftimet per planin. Verifiko standardin real te automjetit.';
  $('euroDetail').textContent='Automjeti: '+b+' '+m+' ('+y+'). Vleresimi: '+e.label+'. Besueshmeria: '+e.confidence+'. '+outcome+' Standardi perfundimtar percaktohet nga homologimi/VIN dhe dokumentet teknike, jo vetem nga marka, modeli apo viti.';
