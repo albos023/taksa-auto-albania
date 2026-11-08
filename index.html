@@ -537,7 +537,7 @@ function initHistoryChecker(){
  if(!response.ok)throw new Error(data.error||'Nuk u mor raporti nga XAPI Korea.');
  const ins=data.inspection||{}, insurance=data.insurance||{};
  const yn=x=>x===true?'Po':x===false?'Jo':'Nuk ka te dhena';
- const won=x=>x===null||x===undefined||x===''?'Nuk ka te dhena':Number(x).toLocaleString('en-US')+' KRW';
+ const KRW_TO_ALL=0.0598;const won=x=>x===null||x===undefined||x===''?'Nuk ka te dhena':Math.round(Number(x)*KRW_TO_ALL).toLocaleString('sq-AL')+' lekë';
  const esc=x=>String(x??'—').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const section=(title,items,url,label)=>{
    const rows=items.map(([k,v])=>'<div class="history-item"><span>'+esc(k)+'</span><strong>'+esc(v)+'</strong></div>').join('');
@@ -545,7 +545,7 @@ function initHistoryChecker(){
    return '<section class="history-section"><h3>'+title+'</h3><div class="history-grid">'+rows+'</div>'+link+'</section>';
  };
  const report=[];
- report.push('<div class="history-report"><section class="history-section"><h3>Raporti i automjetit · Encar</h3><div class="history-grid"><div class="history-item"><span>ID e njoftimit</span><strong>'+esc(id)+'</strong></div><div class="history-item"><span>Burimi</span><strong>Kore e Jugut · Encar / XAPI</strong></div></div></section>');
+ report.push('<div class="history-report"><section class="history-section"><h3>Raporti i automjetit · Encar</h3><div class="history-grid"><div class="history-item"><span>ID e njoftimit</span><strong>'+esc(id)+'</strong></div><div class="history-item"><span>Burimi</span><strong>Kore e Jugut · Encar / XAPI</strong></div></div><p class="small" style="margin:10px 0 0">Kostot janë konvertuar nga won korean (KRW) në lekë me kurs orientues 1 KRW ≈ 0,0598 lekë. Vlera mund të ndryshojë sipas kursit të këmbimit.</p></section>');
  if(insurance.available===true){
    report.push(section('1. Historiku i sigurimit',[
     ['Aksident i regjistruar',yn(insurance.had_insurance_accident)],
