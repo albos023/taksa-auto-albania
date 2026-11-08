@@ -91,6 +91,174 @@ const vehicleCatalog={
 'Duster':[['1.5 dCi 110 hp',81,1350,'normal'],['1.6 Benzinë 115 hp',84,1300,'normal']]
 }
 };
+// Katalog i zgjeruar: versione te perhapura ne tregun shqiptar.
+// Fuqia ne kW dhe masa ne kg jane orientuese; verifikohen ne dokumentet e mjetit.
+const vehicleCatalogExtra={
+'Volkswagen':{
+'Polo':[['1.2 TDI 75 hp',55,1100,'normal'],['1.4 TDI 90 hp',66,1150,'normal'],['1.0 TSI 95 hp',70,1100,'normal']],
+'Touran':[['1.6 TDI 105 hp',77,1550,'normal'],['2.0 TDI 140 hp',103,1600,'normal'],['2.0 TDI 150 hp',110,1650,'normal']],
+'Touareg':[['3.0 V6 TDI 204 hp',150,2200,'normal'],['3.0 V6 TDI 245 hp',180,2250,'normal']],
+'Sharan':[['2.0 TDI 140 hp',103,1800,'normal'],['2.0 TDI 170 hp',125,1850,'normal']],
+'T-Roc':[['1.6 TDI 115 hp',85,1400,'normal'],['2.0 TDI 150 hp',110,1500,'normal'],['1.5 TSI 150 hp',110,1400,'normal']],
+'T-Cross':[['1.0 TSI 95 hp',70,1250,'normal'],['1.0 TSI 115 hp',85,1280,'normal']],
+'Up!':[['1.0 MPI 60 hp',44,950,'normal'],['1.0 MPI 75 hp',55,960,'normal']]
+},
+'Audi':{
+'A1':[['1.6 TDI 105 hp',77,1200,'normal'],['1.0 TFSI 110 hp',81,1150,'normal']],
+'A5':[['2.0 TDI 177 hp',130,1650,'normal'],['2.0 TDI 190 hp',140,1680,'normal'],['3.0 TDI 245 hp',180,1750,'normal']],
+'Q3':[['2.0 TDI 140 hp',103,1600,'normal'],['2.0 TDI 150 hp',110,1650,'normal']],
+'Q5':[['2.0 TDI 170 hp',125,1800,'normal'],['2.0 TDI 190 hp',140,1850,'normal'],['3.0 TDI 245 hp',180,1950,'normal']],
+'Q7':[['3.0 TDI 204 hp',150,2300,'normal'],['3.0 TDI 245 hp',180,2350,'normal']]
+},
+'BMW':{
+'Seria 2':[['218d 150 hp',110,1500,'normal'],['220d 190 hp',140,1550,'normal']],
+'Seria 4':[['420d 190 hp',140,1650,'normal']],
+'Seria 7':[['730d 245 hp',180,1950,'normal']],
+'X1':[['18d 150 hp',110,1600,'normal'],['20d 190 hp',140,1650,'normal']],
+'X3':[['20d 184 hp',135,1750,'normal'],['20d 190 hp',140,1800,'normal'],['30d 258 hp',190,1900,'normal']],
+'X5':[['30d 235 hp',173,2150,'normal'],['30d 258 hp',190,2200,'normal']]
+},
+'Mercedes-Benz':{
+'CLA':[['180 CDI 109 hp',80,1500,'normal'],['200 CDI 136 hp',100,1550,'normal']],
+'Klasa S':[['S350 CDI 258 hp',190,2050,'normal']],
+'GLA':[['200 CDI 136 hp',100,1600,'normal'],['220 CDI 170 hp',125,1650,'normal']],
+'GLC':[['220d 170 hp',125,1850,'normal'],['250d 204 hp',150,1900,'normal']],
+'ML / GLE':[['250 CDI 204 hp',150,2150,'normal'],['350 CDI 258 hp',190,2250,'normal']]
+},
+'Skoda':{
+'Rapid':[['1.6 TDI 105 hp',77,1250,'normal'],['1.4 TDI 90 hp',66,1200,'normal']],
+'Yeti':[['2.0 TDI 110 hp',81,1550,'normal'],['2.0 TDI 140 hp',103,1600,'normal']],
+'Karoq':[['1.6 TDI 115 hp',85,1450,'normal'],['2.0 TDI 150 hp',110,1550,'normal']],
+'Kodiaq':[['2.0 TDI 150 hp',110,1750,'normal'],['2.0 TDI 190 hp',140,1800,'normal']]
+},
+'Opel':{
+'Meriva':[['1.3 CDTI 95 hp',70,1350,'normal'],['1.7 CDTI 110 hp',81,1400,'normal']],
+'Zafira':[['1.7 CDTI 110 hp',81,1600,'normal'],['2.0 CDTI 130 hp',96,1650,'normal']],
+'Mokka':[['1.6 CDTI 136 hp',100,1500,'normal'],['1.4 Turbo 140 hp',103,1450,'normal']]
+},
+'Toyota':{
+'Auris':[['1.4 D-4D 90 hp',66,1300,'normal'],['1.6 Valvematic 132 hp',97,1300,'normal'],['1.8 Hybrid 136 hp',100,1400,'hybrid']],
+'Avensis':[['2.0 D-4D 126 hp',93,1550,'normal'],['2.2 D-4D 150 hp',110,1650,'normal']],
+'C-HR':[['1.8 Hybrid 122 hp',90,1450,'hybrid'],['2.0 Hybrid 184 hp',135,1500,'hybrid']],
+'Land Cruiser':[['3.0 D-4D 173 hp',127,2150,'normal'],['2.8 D-4D 177 hp',130,2200,'normal']],
+'Prius':[['1.8 Hybrid 122 hp',90,1450,'hybrid']]
+},
+'Hyundai':{
+'i20':[['1.1 CRDi 75 hp',55,1100,'normal'],['1.4 CRDi 90 hp',66,1150,'normal']],
+'i40':[['1.7 CRDi 115 hp',85,1550,'normal'],['1.7 CRDi 136 hp',100,1600,'normal']],
+'Santa Fe':[['2.2 CRDi 197 hp',145,1950,'normal'],['2.2 CRDi 200 hp',147,2000,'normal']],
+'Kona':[['1.0 T-GDI 120 hp',88,1300,'normal'],['1.6 Hybrid 141 hp',104,1450,'hybrid']]
+},
+'Kia':{
+'Rio':[['1.1 CRDi 75 hp',55,1100,'normal'],['1.4 CRDi 90 hp',66,1150,'normal']],
+'Optima':[['1.7 CRDi 141 hp',104,1600,'normal'],['2.0 Hybrid 192 hp',141,1650,'hybrid']],
+'Sorento':[['2.2 CRDi 197 hp',145,2000,'normal'],['2.2 CRDi 200 hp',147,2050,'normal']],
+'Niro':[['1.6 Hybrid 141 hp',104,1500,'hybrid'],['1.6 Plug-in 141 hp',104,1550,'hybrid']]
+},
+'Ford':{
+'Mondeo':[['2.0 TDCi 140 hp',103,1600,'normal'],['2.0 TDCi 150 hp',110,1650,'normal']],
+'C-Max':[['1.6 TDCi 115 hp',85,1450,'normal'],['2.0 TDCi 140 hp',103,1550,'normal']],
+'EcoSport':[['1.5 TDCi 95 hp',70,1300,'normal'],['1.0 EcoBoost 125 hp',92,1250,'normal']],
+'Puma':[['1.0 EcoBoost 125 hp',92,1300,'normal'],['1.0 EcoBoost Hybrid 155 hp',114,1350,'hybrid']],
+'Ranger':[['2.2 TDCi 150 hp',110,2050,'normal'],['3.2 TDCi 200 hp',147,2200,'normal']]
+},
+'Nissan':{
+'Juke':[['1.5 dCi 110 hp',81,1350,'normal'],['1.6 Benzine 117 hp',86,1250,'normal']],
+'X-Trail':[['1.6 dCi 130 hp',96,1650,'normal'],['2.0 dCi 177 hp',130,1750,'normal']],
+'Micra':[['1.2 Benzine 80 hp',59,1000,'normal'],['1.5 dCi 90 hp',66,1050,'normal']]
+},
+'Renault':{
+'Scenic':[['1.5 dCi 110 hp',81,1500,'normal'],['1.6 dCi 130 hp',96,1550,'normal']],
+'Captur':[['1.5 dCi 90 hp',66,1250,'normal'],['1.3 TCe 130 hp',96,1300,'normal']],
+'Laguna':[['2.0 dCi 150 hp',110,1600,'normal'],['2.0 dCi 175 hp',129,1650,'normal']],
+'Kadjar':[['1.3 TCe 140 hp',103,1500,'normal']]
+},
+'Peugeot':{
+'208':[['1.4 HDi 68 hp',50,1100,'normal'],['1.6 BlueHDi 100 hp',74,1150,'normal']],
+'508':[['1.6 HDi 115 hp',85,1500,'normal'],['2.0 BlueHDi 150 hp',110,1600,'normal']],
+'5008':[['1.6 HDi 120 hp',88,1650,'normal'],['2.0 HDi 150 hp',110,1750,'normal']]
+},
+'Dacia':{
+'Sandero':[['1.5 dCi 90 hp',66,1100,'normal'],['0.9 TCe 90 hp',66,1050,'normal']],
+'Logan':[['1.5 dCi 90 hp',66,1100,'normal'],['1.0 SCe 75 hp',55,1050,'normal']],
+'Lodgy':[['1.5 dCi 110 hp',81,1450,'normal']]
+},
+'Honda':{
+'Civic':[['1.6 i-DTEC 120 hp',88,1350,'normal'],['2.2 i-DTEC 150 hp',110,1450,'normal'],['1.8 i-VTEC 140 hp',103,1300,'normal']],
+'Accord':[['2.2 i-DTEC 150 hp',110,1550,'normal']],
+'CR-V':[['2.2 i-DTEC 150 hp',110,1700,'normal'],['1.6 i-DTEC 160 hp',118,1750,'normal'],['2.0 Hybrid 184 hp',135,1800,'hybrid']],
+'Jazz':[['1.3 i-VTEC 102 hp',75,1100,'normal'],['1.5 Hybrid 109 hp',80,1150,'hybrid']]
+},
+'Mazda':{
+'Mazda 2':[['1.5 Skyactiv-G 90 hp',66,1050,'normal']],
+'Mazda 3':[['1.6 diesel 115 hp',85,1350,'normal'],['2.2 diesel 150 hp',110,1450,'normal'],['2.0 Skyactiv-G 120 hp',88,1350,'normal']],
+'Mazda 6':[['2.2 diesel 150 hp',110,1550,'normal'],['2.2 diesel 175 hp',129,1600,'normal']],
+'CX-3':[['1.5 diesel 105 hp',77,1350,'normal'],['2.0 benzine 120 hp',88,1350,'normal']],
+'CX-5':[['2.2 diesel 150 hp',110,1700,'normal'],['2.2 diesel 175 hp',129,1750,'normal'],['2.0 benzine 165 hp',121,1650,'normal']]
+},
+'Volvo':{
+'S40':[['1.6D 110 hp',81,1400,'normal'],['2.0D 136 hp',100,1450,'normal']],
+'S60':[['2.0 D3 163 hp',120,1600,'normal'],['2.0 D4 190 hp',140,1650,'normal']],
+'V60':[['2.0 D4 190 hp',140,1700,'normal']],
+'XC60':[['2.0 D4 190 hp',140,1850,'normal'],['2.4 D5 215 hp',158,1950,'normal']],
+'XC90':[['2.0 D5 225 hp',165,2150,'normal'],['2.4 D5 200 hp',147,2200,'normal']]
+},
+'SEAT':{
+'Ibiza':[['1.2 TDI 75 hp',55,1100,'normal'],['1.6 TDI 105 hp',77,1150,'normal']],
+'Leon':[['1.6 TDI 105 hp',77,1300,'normal'],['2.0 TDI 150 hp',110,1400,'normal']],
+'Toledo':[['1.6 TDI 105 hp',77,1300,'normal']],
+'Ateca':[['2.0 TDI 150 hp',110,1600,'normal']]
+},
+'Citroen':{
+'C3':[['1.4 HDi 70 hp',51,1100,'normal'],['1.6 BlueHDi 100 hp',74,1150,'normal']],
+'C4':[['1.6 HDi 115 hp',85,1350,'normal'],['1.6 BlueHDi 120 hp',88,1400,'normal']],
+'C5':[['2.0 HDi 140 hp',103,1600,'normal'],['2.0 BlueHDi 150 hp',110,1650,'normal']],
+'C4 Picasso':[['1.6 HDi 115 hp',85,1500,'normal'],['2.0 HDi 150 hp',110,1600,'normal']]
+},
+'Fiat':{
+'Punto':[['1.3 Multijet 75 hp',55,1100,'normal'],['1.3 Multijet  diesel 95 hp',70,1150,'normal']],
+'Tipo':[['1.3 Multijet 95 hp',70,1250,'normal'],['1.6 Multijet 120 hp',88,1300,'normal']],
+'500':[['1.2 benzine 69 hp',51,950,'normal'],['1.3 Multijet 95 hp',70,1050,'normal']],
+'500L':[['1.3 Multijet 85 hp',63,1300,'normal']]
+},
+'Suzuki':{
+'Swift':[['1.2 benzine 90 hp',66,1000,'normal'],['1.2 Hybrid 83 hp',61,1050,'hybrid']],
+'Vitara':[['1.6 DDiS 120 hp',88,1350,'normal'],['1.4 Boosterjet 140 hp',103,1300,'normal']],
+'SX4 S-Cross':[['1.6 DDiS 120 hp',88,1400,'normal'],['1.4 Boosterjet 140 hp',103,1450,'normal']]
+},
+'Mitsubishi':{
+'ASX':[['1.8 DI-D 150 hp',110,1550,'normal'],['2.2 DI-D 150 hp',110,1650,'normal']],
+'Outlander':[['2.2 DI-D 150 hp',110,1800,'normal'],['2.0 PHEV 203 hp',149,1850,'hybrid']],
+'Lancer':[['1.8 DI-D 150 hp',110,1450,'normal']]
+},
+'Jeep':{
+'Compass':[['2.0 Multijet 140 hp',103,1650,'normal'],['2.0 Multijet 170 hp',125,1700,'normal']],
+'Cherokee':[['2.0 Multijet 170 hp',125,1900,'normal'],['2.2 Multijet 200 hp',147,1950,'normal']],
+'Grand Cherokee':[['3.0 CRD 190 hp',140,2250,'normal'],['3.0 CRD 250 hp',184,2300,'normal']],
+'Renegade':[['1.6 Multijet 120 hp',88,1500,'normal'],['2.0 Multijet 140 hp',103,1600,'normal']]
+},
+'Land Rover':{
+'Freelander 2':[['2.2 TD4 150 hp',110,1800,'normal'],['2.2 SD4 190 hp',140,1850,'normal']],
+'Discovery 4':[['3.0 TDV6 211 hp',155,2500,'normal'],['3.0 SDV6 245 hp',180,2550,'normal']],
+'Range Rover Evoque':[['2.2 SD4 190 hp',140,1750,'normal'],['2.0 TD4 150 hp',110,1800,'normal']],
+'Range Rover Sport':[['3.0 TDV6 245 hp',180,2300,'normal']]
+},
+'Subaru':{
+'Forester':[['2.0D 147 hp',108,1600,'normal'],['2.0 benzine 150 hp',110,1550,'normal']],
+'Outback':[['2.0D 150 hp',110,1700,'normal'],['2.5 benzine 175 hp',129,1750,'normal']],
+'XV':[['2.0D 147 hp',108,1500,'normal'],['2.0 benzine 150 hp',110,1450,'normal']]
+},
+'Lexus':{
+'IS':[['220d 177 hp',130,1600,'normal'],['300h Hybrid 223 hp',164,1700,'hybrid']],
+'NX':[['300h Hybrid 197 hp',145,1800,'hybrid']],
+'RX':[['450h Hybrid 313 hp',230,2100,'hybrid']]
+},
+'Mini':{
+'Cooper':[['1.5 diesel 116 hp',85,1200,'normal'],['1.5 benzine 136 hp',100,1200,'normal']],
+'Countryman':[['1.6 diesel 112 hp',82,1450,'normal'],['2.0 diesel 150 hp',110,1550,'normal']]
+}
+};
+for(const [make,models] of Object.entries(vehicleCatalogExtra)){vehicleCatalog[make]={...(vehicleCatalog[make]||{}),...models};}
 function fillSelect(el,items,placeholder){el.innerHTML='<option value="">'+placeholder+'</option>'+items.map(v=>'<option value="'+String(v).replace(/"/g,'&quot;')+'">'+v+'</option>').join('');}
 function initVehiclePicker(){
 const brand=$('carBrand'),model=$('carModel'),engine=$('carEngine');
